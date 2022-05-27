@@ -1,5 +1,7 @@
 package com.web.lab4.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.lab4.dto.DotDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +38,10 @@ public class Dot {
     @Column(name = "execution_date")
     private String date;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+//    @JsonBackReference
+    @JsonIgnore
     private User user;
 
     public Dot(double x, double y, double r, char result, String date, User user) {
@@ -47,6 +51,12 @@ public class Dot {
         this.result = result;
         this.date = date;
         this.user = user;
+    }
+
+    public Dot (DotDto dto) {
+        this.x = dto.getX();
+        this.y = dto.getY();
+        this.r = dto.getR();
     }
 
 }
