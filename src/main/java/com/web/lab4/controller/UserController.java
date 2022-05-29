@@ -2,7 +2,6 @@ package com.web.lab4.controller;
 
 import com.web.lab4.entity.User;
 import com.web.lab4.security.UserService;
-import org.apache.commons.collections4.IterableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @CrossOrigin
-    @PostMapping("/register")
+    @PostMapping(path = "/register", produces = "application/json")
     public ResponseEntity<?> createUser(@RequestBody User newUser) {
         if (userService.findByUsername(newUser.getName()) != null) {
             logger.error("Username already exist: " + newUser.getName());
@@ -33,13 +32,17 @@ public class UserController {
 
         logger.info("User registered " + newUser.getName());
 
-        return new ResponseEntity<>(userService.save(newUser), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(newUser));
     }
 
     @CrossOrigin
     @RequestMapping("/login")
     public Principal user(Principal principal) {
-        logger.info("User logged "+principal);
+        if(principal == null) {
+            logger.info("Not logged in");
+        } else {
+            logger.info("Logged " + principal.getName());
+        }
         return principal;
     }
 }
