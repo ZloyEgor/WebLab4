@@ -46,18 +46,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 // ignoring the guest's urls "
                 .antMatchers("/account/**").permitAll()
                 // authenticate all remaining URLS
-                .anyRequest().fullyAuthenticated()
-                .and()
+                .anyRequest().fullyAuthenticated().and()
                 /* "/logout" will log the user out by invalidating the HTTP Session,
-                 * cleaning up any {link rememberMe()} authentication that was configured, */
-                .logout()
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/account/logout", "POST"))
-                .logoutSuccessUrl("/")
-                .and()
+                 * cleaning up any {link rememberMe()} authentication that was configured, */.logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll().clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/account/logout", "POST")).logoutSuccessUrl("/").and()
                 // enabling the basic authentication
                 .httpBasic().and()
                 // configuring the session on the server

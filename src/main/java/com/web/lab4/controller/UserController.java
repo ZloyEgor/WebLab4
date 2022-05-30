@@ -24,10 +24,9 @@ public class UserController {
     @PostMapping(path = "/register", produces = "application/json")
     public ResponseEntity<?> createUser(@RequestBody User newUser) {
         if (userService.findByUsername(newUser.getName()) != null) {
-            logger.error("Username already exist: " + newUser.getName());
-            return new ResponseEntity<>(
-                    new RuntimeException("User with username " + newUser.getName() + "already exist"),
-                    HttpStatus.CONFLICT);
+            String message = "User with username " + newUser.getName() + " already exists";
+            logger.error(message);
+            return new ResponseEntity<>(new RuntimeException(message), HttpStatus.CONFLICT);
         }
 
         logger.info("User registered " + newUser.getName());
@@ -38,7 +37,7 @@ public class UserController {
     @CrossOrigin
     @RequestMapping("/login")
     public Principal user(Principal principal) {
-        if(principal == null) {
+        if (principal == null) {
             logger.info("Not logged in");
         } else {
             logger.info("Logged " + principal.getName());

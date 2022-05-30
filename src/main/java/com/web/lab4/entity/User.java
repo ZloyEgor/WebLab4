@@ -1,18 +1,15 @@
 package com.web.lab4.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,14 +38,6 @@ public class User implements Serializable {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-    }
-
-    public void setDots(Set<Dot> dots) {
-        this.dots = dots;
-
-        for (Dot dot: this.dots) {
-            dot.setUser(this);
-        }
     }
 }
 

@@ -11,13 +11,11 @@ public class AreaChecker {
         double y = dot.getY();
         double r = dot.getR();
 
-        if (r < 0)
-            return false;
+        if (r < 0) return false;
 
-        if (r == 0)
-            return x == 0 && y == 0;
+        if (r == 0) return x == 0 && y == 0;
 
-        if (x >= 0 && y >= 0) {
+        if (x > 0 && y >= 0) {
             return x <= r && y <= r / 2.;
         }
 
